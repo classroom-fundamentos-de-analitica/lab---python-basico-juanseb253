@@ -306,7 +306,9 @@ def pregunta_10():
 
 
     """
-    return
+    arch = open('data.csv','r')
+    arch = [(renglon.split()[0],len(renglon.split()[3].split(",")),len(renglon.split()[4].split(","))) for renglon in arch]
+    return arch
 
 
 def pregunta_11():
