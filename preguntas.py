@@ -242,7 +242,15 @@ def pregunta_08():
     ]
 
     """
-    return
+    resp = pregunta_07()
+    for tup in range(len(resp)):
+        resp[tup] = list(resp[tup])
+        resp[tup][1] = list(set(resp[tup][1]))
+        resp[tup][1].sort()
+        resp[tup] = tuple(resp[tup])
+
+    return resp
+
 
 
 def pregunta_09():
