@@ -12,7 +12,6 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 
-
 def pregunta_01():
     """
     Retorne la suma de la segunda columna.
@@ -21,7 +20,11 @@ def pregunta_01():
     214
 
     """
-    return
+    arch = open('data.csv','r').readlines()
+    arch = [int(z.replace("\n","").split()[1]) for z in arch]
+    suma = sum(arch)
+
+    return suma
 
 
 def pregunta_02():
@@ -39,7 +42,17 @@ def pregunta_02():
     ]
 
     """
-    return
+    arch = open('data.csv','r').readlines()
+    arch = [z.replace("\n", "").split()[0] for z in arch]
+    counter = []
+    letters = []
+    for letter in arch:
+        if letter not in letters:
+            letters.append(letter)
+            counter.append(arch.count(letter))
+    resp = list(zip(letters,counter))
+    resp.sort(key =lambda x: x[0])
+    return resp
 
 
 def pregunta_03():
@@ -57,7 +70,19 @@ def pregunta_03():
     ]
 
     """
-    return
+    arch = open('data.csv','r').readlines()
+    arch = [z.replace("\n", "").split()[0:2] for z in arch]
+    letters = []
+    suma = []
+    for lista in arch:
+        if lista[0] not in letters:
+            letters.append(lista[0])
+            suma.append(int(lista[1]))
+        else:
+            suma[letters.index(lista[0])] += int(lista[1])
+    resp = list(zip(letters,suma))
+    resp.sort(key = lambda x: x[0])
+    return resp
 
 
 def pregunta_04():
@@ -82,8 +107,17 @@ def pregunta_04():
     ]
 
     """
-    return
-
+    arch = open('data.csv','r').readlines()
+    arch = [renglon.replace("\n", "").split()[2].split("-")[1] for renglon in arch]
+    counter = []
+    letters = []
+    for letter in arch:
+        if letter not in letters:
+            letters.append(letter)
+            counter.append(arch.count(letter))
+    resp = list(zip(letters,counter))
+    resp.sort(key =lambda x: x[0])
+    return resp
 
 def pregunta_05():
     """
@@ -100,7 +134,23 @@ def pregunta_05():
     ]
 
     """
-    return
+    arch = open('data.csv','r').readlines()
+    arch = [renglon.split()[0:2] for renglon in arch]
+    letters = []
+    max = []
+    min = []
+    for lista in arch:
+        if lista[0] not in letters:
+            letters.append(lista[0])
+            max.append(lista[1])
+            min.append(lista[1])
+        elif lista[1] > max[letters.index(lista[0])]:
+            max[letters.index(lista[0])] = lista[1]
+        elif lista[1] < min[letters.index(lista[0])]:
+            min[letters.index(lista[0])] = lista[1]
+    resp = list(zip(letters,max,min))
+    resp.sort(key=lambda x: x[0])
+    return resp
 
 
 def pregunta_06():
@@ -258,3 +308,4 @@ def pregunta_12():
 
     """
     return
+
