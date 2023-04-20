@@ -166,7 +166,22 @@ def pregunta_06():
     ]
 
     """
-    return
+    arch = open('data.csv','r').readlines()
+    arch = [renglon.split()[4].split(",") for renglon in arch]
+    dic = {}
+
+    for lista in arch:
+        for list2 in lista:
+            w = list2.split(":")
+            if w[0] not in dic.keys():
+                dic[w[0]] = [int(w[1]),int(w[1])]
+            elif dic[w[0]][0] > int(w[1]):
+                dic[w[0]] = [int(w[1]),dic[w[0]][1]]
+            elif dic[w[0]][1] < int(w[1]):
+                dic[w[0]] = [dic[w[0]][0],int(w[1])]
+    valores = [(list(dic.keys())[x],list(dic.values())[x][0],list(dic.values())[x][1]) for x in range(len(dic.keys()))]
+    valores.sort(key = lambda x: x[0])
+    return valores
 
 
 def pregunta_07():
