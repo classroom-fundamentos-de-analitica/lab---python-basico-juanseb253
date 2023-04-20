@@ -365,4 +365,21 @@ def pregunta_12():
     }
 
     """
-    return
+    arch = open("data.csv", "r")
+    arch = [[renglon.split()[0], renglon.replace("\n","").split()[4].split(",")] for renglon in arch]
+    for e in range(len(arch)):
+        for i in range(len(arch[e][1])):
+            arch[e][1][i] = int(arch[e][1][i].split(":")[1])
+        arch[e][1] = sum(arch[e][1])
+    suma = []
+    keys = []
+    for i in range(len(arch)):
+        if arch[i][0] not in keys:
+            keys.append(arch[i][0])
+            suma.append(arch[i][1])
+        else:
+            suma[keys.index(arch[i][0])] += arch[i][1]
+    resp = list(zip(keys,suma))
+    resp.sort(key=lambda x: x[0])
+    resp = dict(resp)
+    return resp
