@@ -273,7 +273,19 @@ def pregunta_09():
     }
 
     """
-    return
+    arch = open('data.csv', 'r').readlines()
+    arch = [renglon.replace("\n","").split()[4].split(",") for renglon in arch]
+    arch = [clave.split(":")[0] for lista in arch for clave in lista]
+    keys = []
+    counter = []
+    for clave in arch:
+        if clave not in keys:
+            keys.append(clave)
+            counter.append(arch.count(clave))
+    resp = list(zip(keys, counter))
+    resp.sort(key=lambda x: x[0])
+    resp = dict(resp)
+    return resp
 
 
 def pregunta_10():
