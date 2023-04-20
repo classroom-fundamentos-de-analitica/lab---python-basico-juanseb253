@@ -329,7 +329,25 @@ def pregunta_11():
 
 
     """
-    return
+    arch = open("data.csv", "r")
+    arch = [[int(renglon.split()[1]), renglon.split()[3].split(",")] for renglon in arch]
+
+    keys = []
+    suma = []
+
+    for e in range(len(arch)):
+        for i in arch[e][1]:
+
+            if i not in keys:
+                keys.append(i)
+                suma.append(arch[e][0])
+            else:
+                suma[keys.index(i)] += arch[e][0]
+    resp = list(zip(keys,suma))
+    resp.sort(key = lambda x :x[0])
+    resp = dict(resp)
+    return resp
+
 
 
 def pregunta_12():
