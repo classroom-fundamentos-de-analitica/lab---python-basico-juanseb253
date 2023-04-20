@@ -44,14 +44,9 @@ def pregunta_02():
     """
     arch = open('data.csv','r').readlines()
     arch = [z.replace("\n", "").split()[0] for z in arch]
-    counter = []
-    letters = []
-    for letter in arch:
-        if letter not in letters:
-            letters.append(letter)
-            counter.append(arch.count(letter))
-    resp = list(zip(letters,counter))
-    resp.sort(key =lambda x: x[0])
+    resp = list(set([(x,arch.count(x)) for x in arch]))
+    resp.sort(key = lambda x: x[0])
+
     return resp
 
 
@@ -109,14 +104,8 @@ def pregunta_04():
     """
     arch = open('data.csv','r').readlines()
     arch = [renglon.replace("\n", "").split()[2].split("-")[1] for renglon in arch]
-    counter = []
-    letters = []
-    for letter in arch:
-        if letter not in letters:
-            letters.append(letter)
-            counter.append(arch.count(letter))
-    resp = list(zip(letters,counter))
-    resp.sort(key =lambda x: x[0])
+    resp = list(set([(x,arch.count(x)) for x in arch]))
+    resp.sort(key = lambda x: x[0])
     return resp
 
 def pregunta_05():
@@ -309,3 +298,5 @@ def pregunta_12():
     """
     return
 
+if __name__ == '__main__':
+    print(pregunta_02())
