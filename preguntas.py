@@ -205,7 +205,19 @@ def pregunta_07():
     ]
 
     """
-    return
+    arch = open('data.csv','r').readlines()
+    arch = [renglon.split()[0:2] for renglon in arch]
+    for i in range(len(arch)):
+        arch[i][1] = int(arch[i][1])
+    resp = []
+    for j in range(10):
+        w = []
+        for i in arch:
+            if i[1] == j:
+                w.append(i[0])
+        resp.append((j, w))
+    resp.sort(key = lambda x: x[0])
+    return resp
 
 
 def pregunta_08():
