@@ -125,6 +125,8 @@ def pregunta_05():
     """
     arch = open('data.csv','r').readlines()
     arch = [renglon.split()[0:2] for renglon in arch]
+    for i in range(len(arch)):
+        arch[i][1] = int(arch[i][1])
     letters = []
     max = []
     min = []
@@ -297,6 +299,3 @@ def pregunta_12():
 
     """
     return
-
-if __name__ == '__main__':
-    print(pregunta_02())
