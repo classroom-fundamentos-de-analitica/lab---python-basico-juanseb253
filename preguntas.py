@@ -12,7 +12,6 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 
-
 def pregunta_01():
     """
     Retorne la suma de la segunda columna.
@@ -21,7 +20,11 @@ def pregunta_01():
     214
 
     """
-    return
+    arch = open('data.csv','r').readlines()
+    arch = [int(z.replace("\n","").split()[1]) for z in arch]
+    suma = sum(arch)
+
+    return suma
 
 
 def pregunta_02():
@@ -39,7 +42,12 @@ def pregunta_02():
     ]
 
     """
-    return
+    arch = open('data.csv','r').readlines()
+    arch = [z.replace("\n", "").split()[0] for z in arch]
+    resp = list(set([(x,arch.count(x)) for x in arch]))
+    resp.sort(key = lambda x: x[0])
+
+    return resp
 
 
 def pregunta_03():
@@ -57,7 +65,19 @@ def pregunta_03():
     ]
 
     """
-    return
+    arch = open('data.csv','r').readlines()
+    arch = [z.replace("\n", "").split()[0:2] for z in arch]
+    letters = []
+    suma = []
+    for lista in arch:
+        if lista[0] not in letters:
+            letters.append(lista[0])
+            suma.append(int(lista[1]))
+        else:
+            suma[letters.index(lista[0])] += int(lista[1])
+    resp = list(zip(letters,suma))
+    resp.sort(key = lambda x: x[0])
+    return resp
 
 
 def pregunta_04():
@@ -82,8 +102,11 @@ def pregunta_04():
     ]
 
     """
-    return
-
+    arch = open('data.csv','r').readlines()
+    arch = [renglon.replace("\n", "").split()[2].split("-")[1] for renglon in arch]
+    resp = list(set([(x,arch.count(x)) for x in arch]))
+    resp.sort(key = lambda x: x[0])
+    return resp
 
 def pregunta_05():
     """
@@ -100,7 +123,25 @@ def pregunta_05():
     ]
 
     """
-    return
+    arch = open('data.csv','r').readlines()
+    arch = [renglon.split()[0:2] for renglon in arch]
+    for i in range(len(arch)):
+        arch[i][1] = int(arch[i][1])
+    letters = []
+    max = []
+    min = []
+    for lista in arch:
+        if lista[0] not in letters:
+            letters.append(lista[0])
+            max.append(lista[1])
+            min.append(lista[1])
+        elif lista[1] > max[letters.index(lista[0])]:
+            max[letters.index(lista[0])] = lista[1]
+        elif lista[1] < min[letters.index(lista[0])]:
+            min[letters.index(lista[0])] = lista[1]
+    resp = list(zip(letters,max,min))
+    resp.sort(key=lambda x: x[0])
+    return resp
 
 
 def pregunta_06():
@@ -125,7 +166,22 @@ def pregunta_06():
     ]
 
     """
-    return
+    arch = open('data.csv','r').readlines()
+    arch = [renglon.split()[4].split(",") for renglon in arch]
+    dic = {}
+
+    for lista in arch:
+        for list2 in lista:
+            w = list2.split(":")
+            if w[0] not in dic.keys():
+                dic[w[0]] = [int(w[1]),int(w[1])]
+            elif dic[w[0]][0] > int(w[1]):
+                dic[w[0]] = [int(w[1]),dic[w[0]][1]]
+            elif dic[w[0]][1] < int(w[1]):
+                dic[w[0]] = [dic[w[0]][0],int(w[1])]
+    valores = [(list(dic.keys())[x],list(dic.values())[x][0],list(dic.values())[x][1]) for x in range(len(dic.keys()))]
+    valores.sort(key = lambda x: x[0])
+    return valores
 
 
 def pregunta_07():
@@ -149,7 +205,19 @@ def pregunta_07():
     ]
 
     """
-    return
+    arch = open('data.csv','r').readlines()
+    arch = [renglon.split()[0:2] for renglon in arch]
+    for i in range(len(arch)):
+        arch[i][1] = int(arch[i][1])
+    resp = []
+    for j in range(10):
+        w = []
+        for i in arch:
+            if i[1] == j:
+                w.append(i[0])
+        resp.append((j, w))
+    resp.sort(key = lambda x: x[0])
+    return resp
 
 
 def pregunta_08():
@@ -174,7 +242,15 @@ def pregunta_08():
     ]
 
     """
-    return
+    resp = pregunta_07()
+    for tup in range(len(resp)):
+        resp[tup] = list(resp[tup])
+        resp[tup][1] = list(set(resp[tup][1]))
+        resp[tup][1].sort()
+        resp[tup] = tuple(resp[tup])
+
+    return resp
+
 
 
 def pregunta_09():
@@ -197,7 +273,19 @@ def pregunta_09():
     }
 
     """
-    return
+    arch = open('data.csv', 'r').readlines()
+    arch = [renglon.replace("\n","").split()[4].split(",") for renglon in arch]
+    arch = [clave.split(":")[0] for lista in arch for clave in lista]
+    keys = []
+    counter = []
+    for clave in arch:
+        if clave not in keys:
+            keys.append(clave)
+            counter.append(arch.count(clave))
+    resp = list(zip(keys, counter))
+    resp.sort(key=lambda x: x[0])
+    resp = dict(resp)
+    return resp
 
 
 def pregunta_10():
@@ -218,7 +306,9 @@ def pregunta_10():
 
 
     """
-    return
+    arch = open('data.csv','r')
+    arch = [(renglon.split()[0],len(renglon.split()[3].split(",")),len(renglon.split()[4].split(","))) for renglon in arch]
+    return arch
 
 
 def pregunta_11():
@@ -239,7 +329,25 @@ def pregunta_11():
 
 
     """
-    return
+    arch = open("data.csv", "r")
+    arch = [[int(renglon.split()[1]), renglon.split()[3].split(",")] for renglon in arch]
+
+    keys = []
+    suma = []
+
+    for e in range(len(arch)):
+        for i in arch[e][1]:
+
+            if i not in keys:
+                keys.append(i)
+                suma.append(arch[e][0])
+            else:
+                suma[keys.index(i)] += arch[e][0]
+    resp = list(zip(keys,suma))
+    resp.sort(key = lambda x :x[0])
+    resp = dict(resp)
+    return resp
+
 
 
 def pregunta_12():
@@ -257,4 +365,21 @@ def pregunta_12():
     }
 
     """
-    return
+    arch = open("data.csv", "r")
+    arch = [[renglon.split()[0], renglon.replace("\n","").split()[4].split(",")] for renglon in arch]
+    for e in range(len(arch)):
+        for i in range(len(arch[e][1])):
+            arch[e][1][i] = int(arch[e][1][i].split(":")[1])
+        arch[e][1] = sum(arch[e][1])
+    suma = []
+    keys = []
+    for i in range(len(arch)):
+        if arch[i][0] not in keys:
+            keys.append(arch[i][0])
+            suma.append(arch[i][1])
+        else:
+            suma[keys.index(arch[i][0])] += arch[i][1]
+    resp = list(zip(keys,suma))
+    resp.sort(key=lambda x: x[0])
+    resp = dict(resp)
+    return resp
